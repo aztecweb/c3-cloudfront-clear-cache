@@ -103,7 +103,12 @@ class Post {
 			throw new \WP_Error( 'Post is required' );
 		}
 		$post = $this->post;
-		$url  = $this->parse_url( get_post_type_archive_link( $post->post_type ) );
+		$archive = get_post_type_archive_link( $post->post_type );
+		if (! $archive ){
+			return false;
+		}
+
+		$url  = $this->parse_url( $archive );
 		if ( is_wp_error( $url ) ) {
 			$url = false;
 		}
